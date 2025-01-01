@@ -15,7 +15,7 @@ interface ContactApkDao {
 
 
     @Delete
-    suspend fun DeleteContact(contact: List<Contact>)
+    suspend fun DeleteContact(contact: Contact)
 
     @Query("SELECT * FROM contacts ORDER BY name ASC")
     fun getAllContacts(): Flow<List<Contact>>

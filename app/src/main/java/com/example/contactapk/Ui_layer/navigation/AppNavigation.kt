@@ -11,7 +11,7 @@ import com.example.contactapk.Ui_layer.Screen.HomeScreenUI
 import com.example.contactapk.Ui_layer.navigation.HomeScreen
 
 @Composable
-fun AppNavigation(modifier: Modifier = Modifier) {
+fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = HomeScreen){
         composable<HomeScreen>{
