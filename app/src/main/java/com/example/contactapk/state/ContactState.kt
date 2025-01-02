@@ -9,5 +9,7 @@ data class ContactState(
     val id: MutableState<Int?> = mutableStateOf(null),
     val name: MutableState<String> = mutableStateOf(""),
     val phoneNumber: MutableState<String> = mutableStateOf(""),
-    val email: MutableState<String> = mutableStateOf("")
+    val email: MutableState<String> = mutableStateOf(""),
+    val dob: MutableState<Long?> = mutableStateOf(null),
+    val imageUrl: MutableState<ByteArray?> = mutableStateOf(null)
 )

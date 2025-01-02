@@ -21,7 +21,7 @@ class ContactAppViewModel @Inject constructor(
     val contactList =
         repo.getAllContacts().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-   private val _state = MutableStateFlow(ContactState())
+    private val _state = MutableStateFlow(ContactState())
 
     val state = combine(contactList, _state) { contactList, state ->
         state.copy(
@@ -34,13 +34,31 @@ class ContactAppViewModel @Inject constructor(
         viewModelScope.launch {
             repo.upsertContact(
                 Contact(
+                    id = state.value.id.value ,
                     name = state.value.name.value,
                     phoneNumber = state.value.phoneNumber.value,
-                    email = state.value.email.value
+                    email = state.value.email.value,
+                    dob = state.value.dob.value,
+                    imageUrl = state.value.imageUrl.value
                 )
             )
         }
     }
 
+    fun deleteContact(contact: Contact) {
+        viewModelScope.launch {
+            repo.deleteContact(
+                Contact(
+                    id = contact.id,
+                    name = state.value.name.value,
+                    phoneNumber = state.value.phoneNumber.value,
+                    email = state.value.email.value,
+                    dob = state.value.dob.value,
+                    imageUrl = state.value.imageUrl.value
+
+                )
+            )
+        }
+    }
 
 }

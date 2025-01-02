@@ -1,6 +1,8 @@
 package com.example.contactapk.Ui_layer.Screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +30,7 @@ import com.example.contactapk.Data.table.Contact
 import com.example.contactapk.Ui_layer.ContactAppViewModel
 import com.example.contactapk.Ui_layer.navigation.AddEditScreen
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenUI(
     navController: NavHostController,
@@ -40,19 +43,49 @@ fun HomeScreenUI(
                 onClick = {
                     navController.navigate(AddEditScreen)
                 }
-            ) { Icon(Icons.Filled.Add, contentDescription = null)}
+            ) { Icon(Icons.Filled.Add, contentDescription = null) }
         }
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(it)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
             items(state.value.contactList) {
-                Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 9.dp)) {
-                    Column(modifier = Modifier.fillMaxSize().padding(9.dp)) {
-                        Text(text = it.name)
-                        Text(text = it.phoneNumber)
-                        Text(text = it.email)
-                    }
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 9.dp)
+                        .combinedClickable(
+                            onClick = {
+                                // navController.navigate(AddEditScreen)
+                            },
+                            onLongClick = {
+                                viewModel.state.value.name.value = it.name
+                                viewModel.state.value.phoneNumber.value = it.phoneNumber
+                                viewModel.state.value.email.value = it.email
+                                viewModel.state.value.dob.value = it.dob
+                                viewModel.state.value.imageUrl.value = it.imageUrl
+                                viewModel.state.value.id.value = it.id
+                                navController.navigate(AddEditScreen)
+
+                            }
+                        )
+                ) {
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(9.dp)
+                        ) {
+                            Text(text = it.name)
+                            Text(text = it.phoneNumber)
+                            Text(text = it.email)
+                        }
+
+
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
-                Spacer(modifier = Modifier.height(10.dp ))
             }
         }
     }
