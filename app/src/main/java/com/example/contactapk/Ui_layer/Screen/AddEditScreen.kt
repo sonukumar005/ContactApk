@@ -3,6 +3,9 @@ package com.example.contactapk.Ui_layer.Screen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.R
+
+
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,8 +16,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.OutlinedTextField
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,11 +38,16 @@ fun AddEditScreenUI(
     navController: NavHostController,
     viewModel: ContactAppViewModel = hiltViewModel()
 ) {
+    val imageUrl by remember {
+        mutableStateOf(R.drawable.ic_launcher_foreground)
+    }
+    val state = viewModel.state.collectAsState()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier =)
         OutlinedTextField(
             value = viewModel.state.value.name.value,
             onValueChange = {
@@ -69,17 +81,18 @@ fun AddEditScreenUI(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = {
-            viewModel.upsertContact()
-            navController.navigateUp()
-        }, modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp),
-           elevation = ButtonDefaults.elevatedButtonElevation(
-               defaultElevation = 10.dp,
-               pressedElevation = 20.dp
-           )
-            ) {
+        Button(
+            onClick = {
+                viewModel.upsertContact()
+                navController.navigateUp()
+            }, modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            elevation = ButtonDefaults.elevatedButtonElevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 20.dp
+            )
+        ) {
             Text(text = "Save Contact")
         }
     }

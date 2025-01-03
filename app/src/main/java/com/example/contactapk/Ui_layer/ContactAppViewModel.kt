@@ -23,8 +23,8 @@ class ContactAppViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(ContactState())
 
-    val state = combine(contactList, _state) { contactList, state ->
-        state.copy(
+    val state = combine(contactList, _state) { contactList, _state ->
+        _state.copy(
             contactList = contactList
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ContactState())

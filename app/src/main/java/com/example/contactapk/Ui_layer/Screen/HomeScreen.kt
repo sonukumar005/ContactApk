@@ -73,16 +73,15 @@ fun HomeScreenUI(
                         )
                 ) {
 
-                        Column(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(9.dp)
-                        ) {
-                            Text(text = it.name)
-                            Text(text = it.phoneNumber)
-                            Text(text = it.email)
-                        }
-
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(9.dp)
+                    ) {
+                        Text(text = it.name)
+                        Text(text = it.phoneNumber)
+                        Text(text = it.email)
+                    }
 
                     Spacer(modifier = Modifier.height(10.dp))
                 }
